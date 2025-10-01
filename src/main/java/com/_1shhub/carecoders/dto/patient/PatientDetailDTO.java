@@ -18,6 +18,7 @@ public class PatientDetailDTO {
     private String name;
     private int age;
     private String gender;
+    private String email;
     private Date dateOfBirth;
     private String phone;
     private Date dateOfRegistration;
