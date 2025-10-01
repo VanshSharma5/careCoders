@@ -1,4 +1,4 @@
-package com._1shhub.medilocker.models;
+package com._1shhub.carecoders.models;
 
 import java.sql.Date;
 

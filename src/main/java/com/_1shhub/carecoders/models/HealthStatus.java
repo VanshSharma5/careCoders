@@ -1,10 +1,11 @@
-package com._1shhub.medilocker.models;
+package com._1shhub.carecoders.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Prescription {
+public class HealthStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long prescriptionId;
-    private String details;
+    private Long statusId;
+    private String bloodPressure;
+    private String bloodSugar;
+    private double weight;
 
-    @OneToOne(mappedBy = "prescription")
-    private PatientRecord patientRecord;
+    @ManyToOne
+    @JoinColumn(name = "patientId")
+    private Patient patient;
 }

@@ -1,4 +1,4 @@
-package com._1shhub.medilocker.models;
+package com._1shhub.carecoders.models;
 
 import java.sql.Date;
 import java.util.List;
@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,28 +16,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Patient {
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long patientId;
+    private Long doctorId;
     private String name;
     private int age;
-    private String gender;
-    private Date dateOfBirth;
-    private String phone;
-    private String email;
-    private Date dateOfRegistration;
+    private String designation;
+    private Date dateOfJoin;
+    private String department;
+    private int experience;
 
-    @ManyToOne
-    @JoinColumn(name = "addressId")
-    private Address address;
-
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "doctor")
     private List<PatientRecord> records;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "doctor")
     private List<Report> reports;
-
-    @OneToMany(mappedBy = "patient")
-    private List<HealthStatus> healthStatuses;
 }

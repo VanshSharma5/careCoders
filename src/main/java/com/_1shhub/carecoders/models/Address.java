@@ -1,11 +1,9 @@
-package com._1shhub.medilocker.models;
+package com._1shhub.carecoders.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +12,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HealthStatus {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long statusId;
-    private String bloodPressure;
-    private String bloodSugar;
-    private double weight;
-
-    @ManyToOne
-    @JoinColumn(name = "patientId")
-    private Patient patient;
+    private Long addressId;
+    private String houseNo;
+    private String street;
+    private String city;
+    private String state;
+    private String pinCode;
+    private String region;
 }
