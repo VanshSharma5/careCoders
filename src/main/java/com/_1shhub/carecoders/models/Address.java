@@ -1,5 +1,6 @@
 package com._1shhub.carecoders.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,19 +16,13 @@ import lombok.NoArgsConstructor;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
+    private Long id;
+
     private String houseNo;
-    public Address(String houseNo, String street, String city, String state, String pinCode, String region) {
-        this.houseNo = houseNo;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.pinCode = pinCode;
-        this.region = region;
-    }
     private String street;
     private String city;
     private String state;
+    @Column(length = 6)
     private String pinCode;
     private String region;
 }

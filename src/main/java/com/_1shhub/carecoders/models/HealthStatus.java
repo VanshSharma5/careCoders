@@ -1,5 +1,6 @@
 package com._1shhub.carecoders.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,10 +18,12 @@ import lombok.NoArgsConstructor;
 public class HealthStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long statusId;
+    private Long id;
+    @Column(length = 7)
     private String bloodPressure;
-    private String bloodSugar;
-    private double weight;
+    private Float bloodSugar;
+    private Float weight;
+    private String symptoms;
 
     @ManyToOne
     @JoinColumn(name = "patientId")
