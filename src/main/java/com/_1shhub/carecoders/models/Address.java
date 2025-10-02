@@ -17,6 +17,14 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
     private String houseNo;
+    public Address(String houseNo, String street, String city, String state, String pinCode, String region) {
+        this.houseNo = houseNo;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.pinCode = pinCode;
+        this.region = region;
+    }
     private String street;
     private String city;
     private String state;

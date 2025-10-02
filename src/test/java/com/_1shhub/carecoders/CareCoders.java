@@ -1,10 +1,10 @@
-package com._1shhub.medilocker;
+package com._1shhub.carecoders;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MedilockerApplicationTests {
+class CareCoders {
 
 	@Test
 	void contextLoads() {

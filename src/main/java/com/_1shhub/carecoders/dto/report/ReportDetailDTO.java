@@ -16,5 +16,8 @@ public class ReportDetailDTO {
     private String report;
     private Date dateOfSample;
     private Date dateOfReport;
+    private String fileName;
+    private String fileType;
+    private String downloadUrl;
     private DoctorSummaryDTO doctor;
 }

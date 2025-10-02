@@ -22,6 +22,7 @@ public class PatientRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long recordId;
+
     private String symptoms;
     private String diagnose;
     private Date date;
@@ -46,3 +47,4 @@ public class PatientRecord {
     @JoinColumn(name = "prescriptionId")
     private Prescription prescription;
 }
+

@@ -17,7 +17,13 @@ public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prescriptionId;
+
     private String details;
+
+    // File metadata
+    private String fileName;
+    private String fileType;
+    private String filePath; // absolute or relative path in file system
 
     @OneToOne(mappedBy = "prescription")
     private PatientRecord patientRecord;

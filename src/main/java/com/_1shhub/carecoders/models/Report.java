@@ -21,9 +21,15 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
+
     private String report;
     private Date dateOfSample;
     private Date dateOfReport;
+
+    // File metadata
+    private String fileName;
+    private String fileType;
+    private String filePath;
 
     @ManyToOne
     @JoinColumn(name = "patientId")

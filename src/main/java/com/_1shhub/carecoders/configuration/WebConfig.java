@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") 
-                .allowedOrigins( "https://dev.1shhub.com") // my subdomain 
+                .allowedOrigins(  "https://dev.1shhub.com") // my subdomain 
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") 
                 .allowedHeaders("*") 
                 .allowCredentials(true) 

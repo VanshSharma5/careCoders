@@ -39,7 +39,7 @@ public class PatientRecordService {
                 r.getDate(),
                 new DoctorSummaryDTO(r.getDoctor().getDoctorId(), r.getDoctor().getName(), r.getDoctor().getDesignation()),
                 new ReportSummaryDTO(r.getReport().getReportId(), r.getReport().getReport()),
-                r.getPrescription() != null ? new PrescriptionDTO(r.getPrescription().getPrescriptionId(), r.getPrescription().getDetails()) : null
+                null
         );
     }
 }

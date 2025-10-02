@@ -10,5 +10,9 @@ import lombok.NoArgsConstructor;
 public class PrescriptionDTO {
     private Long prescriptionId;
     private String details;
+    private String fileName;
+    private String fileType;
+    private String downloadUrl; // built from REST endpoint
 }
+
 
