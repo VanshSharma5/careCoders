@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Long doctorId;
     private String imageUrl;
     @Column(length = 32)
     private String name;
+    @Column(unique = true)
     private String email;
     private LocalDate dateOfBirth; // age an be calculate by this
     private String designation;
@@ -33,10 +33,6 @@ public class Doctor {
     private Integer previousExperience;
     private String department;
 
-
     @OneToMany(mappedBy = "doctor")
     private List<PatientRecord> records;
-
-    @OneToMany(mappedBy = "doctor")
-    private List<Report> reports;
 }

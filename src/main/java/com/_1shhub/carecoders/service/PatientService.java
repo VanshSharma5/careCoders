@@ -1,104 +1,64 @@
 package com._1shhub.carecoders.service;
 
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
-import com._1shhub.carecoders.dto.addres.AddressDTO;
-import com._1shhub.carecoders.dto.doctor.DoctorSummaryDTO;
-import com._1shhub.carecoders.dto.patient.PatientDetailDTO;
-import com._1shhub.carecoders.dto.patient.PatientSummaryDTO;
-import com._1shhub.carecoders.dto.record.PatientRecordDetailDTO;
-import com._1shhub.carecoders.dto.record.PatientRecordSummaryDTO;
-import com._1shhub.carecoders.mapper.ReportMapper;
+import com._1shhub.carecoders.dto.PatientRequestDto;
+import com._1shhub.carecoders.dto.PatientResponceDto;
+import com._1shhub.carecoders.mapper.PatientMapper;
 import com._1shhub.carecoders.models.Address;
-import com._1shhub.carecoders.models.Doctor;
 import com._1shhub.carecoders.models.Patient;
-import com._1shhub.carecoders.models.PatientRecord;
-import com._1shhub.carecoders.repositories.DoctorRepository;
-import com._1shhub.carecoders.repositories.PatientRecordRepository;
+import com._1shhub.carecoders.repositories.AddressRepository;
 import com._1shhub.carecoders.repositories.PatientRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-@RequiredArgsConstructor
 public class PatientService {
     private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
-    private final PatientRecordRepository recordRepository;
+    private final AddressRepository addressRepository;
 
-    public PatientDetailDTO createPatient(PatientDetailDTO dto) {
-        Patient patient = new Patient();
-        patient.setName(dto.getName());
-        patient.setAge(dto.getAge());
-        patient.setGender(dto.getGender());
-        patient.setDateOfBirth(dto.getDateOfBirth());
-        patient.setPhone(dto.getPhone());
-        patient.setEmail(dto.getEmail());
-        patient.setDateOfRegistration(dto.getDateOfRegistration());
-        patient.setAddress(new Address(dto.getAddress().getHouseNo(),
-                dto.getAddress().getStreet(), dto.getAddress().getCity(),
-                dto.getAddress().getState(), dto.getAddress().getPinCode(), null));
-        patientRepository.save(patient);
-
-        return dto;
+    public PatientService(PatientRepository patientRepository, AddressRepository addressRepository) {
+        this.patientRepository = patientRepository;
+        this.addressRepository = addressRepository;
     }
 
-    public PatientDetailDTO getPatientById(Long id) {
-        Patient p = patientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
-        List<PatientRecordSummaryDTO> recordSummary = recordRepository.findAll()
-                .stream()
-                .map(ReportMapper::recordToRecordSummary)
-                .toList();
-
-        return new PatientDetailDTO(
-                p.getPatientId(),
-                p.getName(),
-                p.getAge(),
-                p.getGender(),
-                p.getEmail(),
-                p.getDateOfBirth(),
-                p.getPhone(),
-                p.getDateOfRegistration(),
-                new AddressDTO(p.getAddress().getHouseNo(), p.getAddress().getStreet(),
-                               p.getAddress().getCity(), p.getAddress().getState(),
-                               p.getAddress().getPinCode()),
-                recordSummary
-        );
-    }
-
-    public List<PatientSummaryDTO> getAllPatients() {
+    public List<PatientResponceDto> getPatients() {
         return patientRepository.findAll()
                 .stream()
-                .map(p -> new PatientSummaryDTO(p.getPatientId(), p.getName(), p.getEmail()))
-                .collect(Collectors.toList());
+                .map(PatientMapper::patientToPatientResponceDto)
+                .toList();
     }
 
-    public PatientRecordDetailDTO addRecord(Long patientId, PatientRecordDetailDTO recordDTO) {
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+    public PatientResponceDto postPatient(PatientRequestDto dto) {
+        Address address = new Address();
+        address.setHouseNo(dto.address().getHouseNo());
+        address.setCity(dto.address().getCity());
+        address.setPinCode(dto.address().getPinCode());
+        address.setState(dto.address().getState());
+        address.setState(dto.address().getState());
+        address.setRegion(dto.address().getRegion());
 
-        Doctor doctor = doctorRepository.findById(recordDTO.getDoctor().getDoctorId())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+        Address savedAddress = addressRepository.save(address);
 
-        PatientRecord record = new PatientRecord();
-        record.setSymptoms(recordDTO.getSymptoms());
-        record.setDiagnose(recordDTO.getDiagnose());
-        record.setDate(recordDTO.getDate());
-        record.setPatient(patient);
-        record.setDoctor(doctor);
+        Patient patient = new Patient();
+        patient.setImageUrl(dto.imageUrl());
+        patient.setName(dto.name());
+        patient.setGender(dto.gender());
+        patient.setDateOfBirth(LocalDate.parse(dto.dateOfBirth()));
+        patient.setPhone(dto.phone());
+        patient.setEmail(dto.email());
+        patient.setDateOfRegistration(LocalDate.parse(dto.dateOfRegistration()));
+        patient.setAddress(savedAddress);
 
-        PatientRecord saved = recordRepository.save(record);
+        patientRepository.save(patient);
 
-        return new PatientRecordDetailDTO(
-                saved.getRecordId(),
-                saved.getSymptoms(),
-                saved.getDiagnose(),
-                saved.getDate(),
-                new DoctorSummaryDTO(doctor.getDoctorId(), doctor.getName(), doctor.getDesignation()),
-                null,
-                null);
+        return PatientMapper.patientToPatientResponceDto(patient);
     }
+
+    public Optional<PatientResponceDto> getPatientById(Long id) {
+        return Optional.ofNullable(PatientMapper.patientToPatientResponceDto(patientRepository.getById(id)));
+    }
+
 }
