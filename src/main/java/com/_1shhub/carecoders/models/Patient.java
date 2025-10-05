@@ -1,19 +1,14 @@
 package com._1shhub.carecoders.models;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +24,7 @@ public class Patient {
     private String imageUrl;
     private String name;
     private String gender;
+    private String password;
     private LocalDate dateOfBirth;
     @Column(length = 16)
     private String phone;
@@ -35,10 +32,5 @@ public class Patient {
     private String email;
     private LocalDate dateOfRegistration;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "addressId")
-    private Address address;
-
-    @OneToMany(mappedBy = "patient")
-    private List<PatientRecord> records;
+    private Long lAddressId;
 }

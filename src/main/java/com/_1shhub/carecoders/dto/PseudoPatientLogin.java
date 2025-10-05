@@ -1,6 +1,6 @@
 package com._1shhub.carecoders.dto;
 
-public record PseudoLoginRequestDto(
+public record PseudoPatientLogin(
         String email,
         String password) {
 

@@ -1,14 +1,17 @@
 package com._1shhub.carecoders.controler;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com._1shhub.carecoders.dto.PatientRequestDto;
-import com._1shhub.carecoders.dto.PatientResponceDto;
+import com._1shhub.carecoders.dto.PatientDto;
+import com._1shhub.carecoders.dto.PseudoPatientLogin;
+import com._1shhub.carecoders.models.Patient;
 import com._1shhub.carecoders.service.PatientService;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,27 +23,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/patient")
-public class PatientController {
+@AllArgsConstructor
+public class PatientControler {
     private final PatientService patientService;
 
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<PatientResponceDto>> getPatients() {
-        // get all patients
+    public ResponseEntity<List<Patient>> getPatientDto() {
         return ResponseEntity.ok().body(patientService.getPatients());
     }
 
     @PostMapping
-    public ResponseEntity<PatientResponceDto> postPatient(@RequestBody PatientRequestDto patientRequestDto) {        
-        return ResponseEntity.ok().body(patientService.postPatient(patientRequestDto));
+    public ResponseEntity<PatientDto> postPatient(@RequestBody PatientDto dto) {
+        return ResponseEntity.ok().body(patientService.postPatient(dto));
     }
-    
+
     @GetMapping("{id}")
-    public ResponseEntity<Optional<PatientResponceDto>> postMethodName(@PathVariable Long id) {
+    public ResponseEntity<Patient> postPatient(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(patientService.getPatientById(id));
     }
-        
+
+    @PostMapping("/login")
+    public ResponseEntity<List<Patient>> getPatientLogin(@RequestBody PseudoPatientLogin pLogin) {
+        return ResponseEntity.ok().body(patientService.getPatientByEmailAndPassword(pLogin.email(), pLogin.password())); 
+    }
+    
+    
 }
