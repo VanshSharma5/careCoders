@@ -44,6 +44,7 @@ public class PatientControler {
 
     @PostMapping("/login")
     public ResponseEntity<List<Patient>> getPatientLogin(@RequestBody PseudoPatientLogin pLogin) {
+        System.out.println(pLogin);
         return ResponseEntity.ok().body(patientService.getPatientByEmailAndPassword(pLogin.email(), pLogin.password())); 
     }
     

@@ -3,6 +3,7 @@ package com._1shhub.carecoders.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,8 +17,7 @@ import com._1shhub.carecoders.repositories.DocumentRepository;
 public class DocumentService {
 
     private final DocumentRepository documentRepository;
-
-    private final String FILE_PATH = "/home/she_loves_me/Code/Code/Projects/SpringBoot/medilocker/src/main/java/com/_1shhub/carecoders/media/";
+    private final String FILE_PATH = "/tmp/media/";
 
     public DocumentService(DocumentRepository documentRepository) {
         this.documentRepository = documentRepository;
@@ -44,5 +44,9 @@ public class DocumentService {
         byte[] docs = Files.readAllBytes(new File(filePath).toPath());
 
         return docs;
+    }
+
+    public List<Document> findByPatientId(Long id) {
+        return documentRepository.findByPatinetId(id);
     }
 }

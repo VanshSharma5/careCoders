@@ -31,11 +31,8 @@ public class PatientService {
 
     public PatientDto postPatient(PatientDto dto) {
         Address address = addressRepository.save(Address.builder()
-        .houseNo(dto.address().getHouseNo())
-        .street(dto.address().getStreet())
         .city(dto.address().getCity())
         .state(dto.address().getState())
-        .region(dto.address().getRegion())
         .pinCode(dto.address().getPinCode())
         .build());
         Patient patient = patientRepository.save(Patient.builder()

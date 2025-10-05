@@ -20,11 +20,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
 
-    private String houseNo;
-    private String street;
+    // private String houseNo;
+    // private String street;
     private String city;
     private String state;
-    private String region;
+    // private String region;
     @Column(length = 6)
     private String pinCode;
 }

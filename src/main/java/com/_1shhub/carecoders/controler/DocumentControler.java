@@ -5,11 +5,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com._1shhub.carecoders.dto.DocumentUploadDto;
+import com._1shhub.carecoders.models.Document;
 import com._1shhub.carecoders.service.DocumentService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,10 +30,15 @@ public class DocumentControler {
 	public DocumentControler(DocumentService documentService) {
         this.documentService = documentService;
     }
+	@GetMapping("/{id}")
+	public List<Document> getImageUrlByPatientId(@RequestParam Long id) {
+		return documentService.findByPatientId(id);
+	}
+	
 
     @PostMapping
-	public ResponseEntity<?> uploadDocument(@RequestParam("image")MultipartFile file, Long patientId) throws IOException {
-		String uploadImage = documentService.uploadDocument(file, patientId);
+	public ResponseEntity<?> uploadDocument(@RequestParam MultipartFile file, @RequestParam Long id) throws IOException {
+		String uploadImage = documentService.uploadDocument(file, id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(uploadImage);
 	}

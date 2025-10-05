@@ -27,4 +27,5 @@ public class Hospital {
     private String Email;
     private Integer gOPDFees;
     private Integer pOPDFees;
+    // private Long lAddressId;
 }
