@@ -27,7 +27,7 @@ public class DocumentService {
         UUID fileName = UUID.randomUUID();
         String filePath = FILE_PATH+fileName.toString();
 
-        Document document = documentRepository.save(Document.builder()
+        documentRepository.save(Document.builder()
                 .fileName(fileName.toString())
                 .fileType(file.getContentType())
                 .filePath(filePath).patinetId(patientId).build());
